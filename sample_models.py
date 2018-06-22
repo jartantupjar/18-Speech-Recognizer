@@ -28,7 +28,7 @@ def rnn_model(input_dim, units, activation, output_dim=29):
     #simp_rnn = GRU(units, activation=activation,return_sequences=True,  name='rnn')(input_data)
     simp_rnn = CuDNNGRU(units,return_sequences=True,  name='rnn')(input_data)
     # TODO: Add batch normalization 
-    bn_rnn = BatchNormalization(n)(simp_rnn)
+    bn_rnn = BatchNormalization()(simp_rnn)
     # TODO: Add a TimeDistributed(Dense(output_dim)) layer
     time_dense = TimeDistributed(Dense(output_dim))(bn_rnn)
     # Add softmax activation layer
@@ -329,10 +329,9 @@ def deep_cnn_rnn_model_v4(input_dim,filters,kernel_size,conv_stride,conv_border_
     print(model.summary())
     return model
 
-def final_model():
+def final_model(input_dim=161):
     """ Build a deep network for speech 
     """
-    input_dim=161
     filters=200
     kernel_size=11
     conv_stride=2
